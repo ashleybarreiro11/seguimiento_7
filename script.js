@@ -9,6 +9,10 @@ function Libro(id, titulo, autor, año) {
     this.prestar=function() {
         this.disponible=false;
     }
+
+    this.devolver=function() {
+        this.dispobible=true;
+    }
 }
 
 // 2. Constructor para Usuarios
@@ -16,14 +20,27 @@ function Usuario(id, nombre, email) {
     this.id = id;
     this.nombre = nombre;
     this.email = email;
+
+    this.prestarLibro=function(libroId) {
+
+    }
+
+    this.devolverLibro=function(libroId) {
+
+    }
 }
 
 // 3. Constructor para Préstamos
 function Prestamo(id, libroId, usuarioId, fechaPrestamo) {
     this.id = id;
     this.libroId = libroId;
-    this.usarioId=usuarioId;
+    this.usuarioId=usuarioId;
     this.fechaPrestamo=fechaPrestamo;
+    this.estado="Prestado";
+
+    this.devolver=function() {
+        this.estado = "Devuelto";
+    }
 }
 
 // Base de datos
@@ -113,28 +130,45 @@ function renderLibros() {
     const tbody = document.getElementById("tablaLibros");
     tbody.innerHTML = "";
     biblioteca.libros.forEach(libro => {
-        tbody.innerHTML =  
+        tbody.innerHTML = `
         <tr>
             <td>${libro.id}</td>
             <td>${libro.titulo}</td>
             <td>${libro.autor}</td>
             <td>${libro.año}</td>
             <td>${libro.disponible ? "Sí" : "No"}</td>
-        </tr>
-    }
-
-    )
-
+        </tr>`;
+    })
 }
 
 function renderUsuarios() {
     // Implementa la lógica para mostrar los usuarios en la tabla
-
+    const tbody = document.getElementById("tablaUsuarios");
+    tbody.innerHTML = "";
+    biblioteca.usuarios.forEach(usuario => {
+        tbody.innerHTML =  `
+        <tr>
+            <td>${usuario.id}</td>
+            <td>${usuario.nombre}</td>
+            <td>${usuario.email}</td>
+            <td><button onclick="eliminarUsuario(${usuario.id})">Eliminar</button></td>
+        </tr> `;
+    });
 }
 
 function renderPrestamos() {
     // Implementa la lógica para mostrar los préstamos en la tabla
-
+    const tbody = document.getElementById("tablaPrestamos");
+    tbody.innerHTML = "";
+    biblioteca.prestamos.forEach(prestamo => {
+        tbody.innerHTML = `
+        <tr>
+            <td>${prestamo.id}</td>
+            <td>${usuario.nombre}</td>
+            <td>${usuario.email}</td>
+            <td><button onclick="eliminarUsuario(${usuario.id})">Eliminar</button></td>
+        </tr> `;
+    });
 }
 
 // Iniciar la aplicación
